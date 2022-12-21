@@ -111,48 +111,6 @@ func (_m *Store) LoadConsensusParams(_a0 int64) (types.ConsensusParams, error) {
 	return r0, r1
 }
 
-// LoadFromDBOrGenesisDoc provides a mock function with given fields: _a0
-func (_m *Store) LoadFromDBOrGenesisDoc(_a0 *tenderminttypes.GenesisDoc) (state.State, error) {
-	ret := _m.Called(_a0)
-
-	var r0 state.State
-	if rf, ok := ret.Get(0).(func(*tenderminttypes.GenesisDoc) state.State); ok {
-		r0 = rf(_a0)
-	} else {
-		r0 = ret.Get(0).(state.State)
-	}
-
-	var r1 error
-	if rf, ok := ret.Get(1).(func(*tenderminttypes.GenesisDoc) error); ok {
-		r1 = rf(_a0)
-	} else {
-		r1 = ret.Error(1)
-	}
-
-	return r0, r1
-}
-
-// LoadFromDBOrGenesisFile provides a mock function with given fields: _a0
-func (_m *Store) LoadFromDBOrGenesisFile(_a0 string) (state.State, error) {
-	ret := _m.Called(_a0)
-
-	var r0 state.State
-	if rf, ok := ret.Get(0).(func(string) state.State); ok {
-		r0 = rf(_a0)
-	} else {
-		r0 = ret.Get(0).(state.State)
-	}
-
-	var r1 error
-	if rf, ok := ret.Get(1).(func(string) error); ok {
-		r1 = rf(_a0)
-	} else {
-		r1 = ret.Error(1)
-	}
-
-	return r0, r1
-}
-
 // LoadLastABCIResponse provides a mock function with given fields: _a0
 func (_m *Store) LoadLastABCIResponse(_a0 int64) (*tendermintstate.ABCIResponses, error) {
 	ret := _m.Called(_a0)
