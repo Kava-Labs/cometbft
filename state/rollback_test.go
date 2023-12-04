@@ -93,12 +93,12 @@ func TestRollbackHard(t *testing.T) {
 	valSet, _ := types.RandValidatorSet(5, 10)
 
 	params := types.DefaultConsensusParams()
-	params.Version.App = 10
+	params.Version.AppVersion = 10
 	now := time.Date(2020, 1, 1, 0, 0, 0, 0, time.UTC)
 
 	block := &types.Block{
 		Header: types.Header{
-			Version:            tmversion.Consensus{Block: version.BlockProtocol, App: 1},
+			Version:            cmtversion.Consensus{Block: version.BlockProtocol, App: 1},
 			ChainID:            "test-chain",
 			Time:               now,
 			Height:             height,
@@ -108,7 +108,6 @@ func TestRollbackHard(t *testing.T) {
 			DataHash:           crypto.CRandBytes(tmhash.Size),
 			ValidatorsHash:     valSet.Hash(),
 			NextValidatorsHash: valSet.CopyIncrementProposerPriority(1).Hash(),
-			ConsensusHash:      params.Hash(),
 			LastResultsHash:    crypto.CRandBytes(tmhash.Size),
 			EvidenceHash:       crypto.CRandBytes(tmhash.Size),
 			ProposerAddress:    crypto.CRandBytes(crypto.AddressSize),
@@ -116,12 +115,11 @@ func TestRollbackHard(t *testing.T) {
 		LastCommit: &types.Commit{Height: height - 1},
 	}
 
-	partSet, err := block.MakePartSet(types.BlockPartSizeBytes)
-	require.NoError(t, err)
+	partSet := block.MakePartSet(types.BlockPartSizeBytes)
 	blockStore.SaveBlock(block, partSet, &types.Commit{Height: block.Height})
 
 	currState := state.State{
-		Version: tmstate.Version{
+		Version: cmtstate.Version{
 			Consensus: block.Header.Version,
 			Software:  version.TMCoreSemVer,
 		},
@@ -140,7 +138,7 @@ func TestRollbackHard(t *testing.T) {
 
 	nextBlock := &types.Block{
 		Header: types.Header{
-			Version:            tmversion.Consensus{Block: version.BlockProtocol, App: 1},
+			Version:            cmtversion.Consensus{Block: version.BlockProtocol, App: 1},
 			ChainID:            block.ChainID,
 			Time:               block.Time,
 			Height:             currState.LastBlockHeight + 1,
@@ -150,7 +148,6 @@ func TestRollbackHard(t *testing.T) {
 			DataHash:           crypto.CRandBytes(tmhash.Size),
 			ValidatorsHash:     valSet.CopyIncrementProposerPriority(1).Hash(),
 			NextValidatorsHash: valSet.CopyIncrementProposerPriority(2).Hash(),
-			ConsensusHash:      params.Hash(),
 			LastResultsHash:    currState.LastResultsHash,
 			EvidenceHash:       crypto.CRandBytes(tmhash.Size),
 			ProposerAddress:    crypto.CRandBytes(crypto.AddressSize),
@@ -158,8 +155,7 @@ func TestRollbackHard(t *testing.T) {
 		LastCommit: &types.Commit{Height: currState.LastBlockHeight},
 	}
 
-	nextPartSet, err := nextBlock.MakePartSet(types.BlockPartSizeBytes)
-	require.NoError(t, err)
+	nextPartSet := nextBlock.MakePartSet(types.BlockPartSizeBytes)
 	blockStore.SaveBlock(nextBlock, nextPartSet, &types.Commit{Height: nextBlock.Height})
 
 	rollbackHeight, rollbackHash, err := state.Rollback(blockStore, stateStore, true)
@@ -175,10 +171,10 @@ func TestRollbackHard(t *testing.T) {
 	// resave the same block
 	blockStore.SaveBlock(nextBlock, nextPartSet, &types.Commit{Height: nextBlock.Height})
 
-	params.Version.App = 11
+	params.Version.AppVersion = 11
 
 	nextState := state.State{
-		Version: tmstate.Version{
+		Version: cmtstate.Version{
 			Consensus: block.Header.Version,
 			Software:  version.TMCoreSemVer,
 		},
@@ -258,7 +254,6 @@ func setupStateStore(t *testing.T, height int64) state.Store {
 		AppHash:                          tmhash.Sum([]byte("app_hash")),
 		LastResultsHash:                  tmhash.Sum([]byte("last_results_hash")),
 		LastBlockHeight:                  height,
-		LastBlockTime:                    time.Now(),
 		LastValidators:                   valSet,
 		Validators:                       valSet.CopyIncrementProposerPriority(1),
 		NextValidators:                   valSet.CopyIncrementProposerPriority(2),
