@@ -468,7 +468,7 @@ func TestNodeNewNodeCustomReactors(t *testing.T) {
 }
 
 func TestNodeNewNodeGenesisHashMismatch(t *testing.T) {
-	config := cfg.ResetTestRoot("node_new_node_genesis_hash")
+	config := test.ResetTestRoot("node_new_node_genesis_hash")
 	defer os.RemoveAll(config.RootDir)
 
 	// Use goleveldb so we can reuse the same db for the second NewNode()
@@ -483,7 +483,7 @@ func TestNodeNewNodeGenesisHashMismatch(t *testing.T) {
 		nodeKey,
 		proxy.DefaultClientCreator(config.ProxyApp, config.ABCI, config.DBDir()),
 		DefaultGenesisDocProviderFunc(config),
-		DefaultDBProvider,
+		cfg.DefaultDBProvider,
 		DefaultMetricsProvider(config.Instrumentation),
 		log.TestingLogger(),
 	)
@@ -497,7 +497,7 @@ func TestNodeNewNodeGenesisHashMismatch(t *testing.T) {
 	require.NoError(t, err)
 
 	// Ensure the genesis doc hash is saved to db
-	stateDB, err := DefaultDBProvider(&DBContext{ID: "state", Config: config})
+	stateDB, err := cfg.DefaultDBProvider(&cfg.DBContext{ID: "state", Config: config})
 	require.NoError(t, err)
 
 	genDocHash, err := stateDB.Get(genesisDocHashKey)
@@ -524,7 +524,7 @@ func TestNodeNewNodeGenesisHashMismatch(t *testing.T) {
 		nodeKey,
 		proxy.DefaultClientCreator(config.ProxyApp, config.ABCI, config.DBDir()),
 		DefaultGenesisDocProviderFunc(config),
-		DefaultDBProvider,
+		cfg.DefaultDBProvider,
 		DefaultMetricsProvider(config.Instrumentation),
 		log.TestingLogger(),
 	)
