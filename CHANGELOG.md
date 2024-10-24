@@ -359,7 +359,7 @@ gossip.
   ([\#1584](https://github.com/cometbft/cometbft/pull/1584))
 - `[config]` Add mempool parameters `experimental_max_gossip_connections_to_persistent_peers` and
   `experimental_max_gossip_connections_to_non_persistent_peers` for limiting the number of peers to
-  which the node gossip transactions. 
+  which the node gossip transactions.
   ([\#1558](https://github.com/cometbft/cometbft/pull/1558))
   ([\#1584](https://github.com/cometbft/cometbft/pull/1584))
 
@@ -720,7 +720,7 @@ to this release!
 ### DEPENDENCIES
 
 - Replace [tm-db](https://github.com/tendermint/tm-db) with
-  [cometbft-db](https://github.com/cometbft/cometbft-db)
+  [cometbft-db](https://github.com/cosmos/cosmos-db)
   ([\#160](https://github.com/cometbft/cometbft/pull/160))
 - Bump tm-load-test to v1.3.0 to remove implicit dependency on Tendermint Core
   ([\#165](https://github.com/cometbft/cometbft/pull/165))

@@ -11,7 +11,7 @@ import (
 	"github.com/cosmos/gogoproto/proto"
 	gogotypes "github.com/cosmos/gogoproto/types"
 
-	dbm "github.com/cometbft/cometbft-db"
+	dbm "github.com/cosmos/cosmos-db"
 
 	clist "github.com/cometbft/cometbft/libs/clist"
 	"github.com/cometbft/cometbft/libs/log"

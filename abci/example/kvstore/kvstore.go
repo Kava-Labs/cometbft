@@ -10,7 +10,7 @@ import (
 	"strconv"
 	"strings"
 
-	dbm "github.com/cometbft/cometbft-db"
+	dbm "github.com/cosmos/cosmos-db"
 
 	"github.com/cometbft/cometbft/abci/types"
 	cryptoencoding "github.com/cometbft/cometbft/crypto/encoding"

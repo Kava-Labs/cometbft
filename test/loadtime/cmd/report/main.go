@@ -9,7 +9,7 @@ import (
 	"strconv"
 	"strings"
 
-	dbm "github.com/cometbft/cometbft-db"
+	dbm "github.com/cosmos/cosmos-db"
 
 	"github.com/cometbft/cometbft/store"
 	"github.com/cometbft/cometbft/test/loadtime/report"

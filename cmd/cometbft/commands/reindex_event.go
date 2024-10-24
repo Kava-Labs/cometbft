@@ -7,7 +7,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	dbm "github.com/cometbft/cometbft-db"
+	dbm "github.com/cosmos/cosmos-db"
 
 	abcitypes "github.com/cometbft/cometbft/abci/types"
 	cmtcfg "github.com/cometbft/cometbft/config"
@@ -37,9 +37,9 @@ var ReIndexEventCmd = &cobra.Command{
 	Short:   "reindex events to the event store backends",
 	Long: `
 reindex-event is an offline tooling to re-index block and tx events to the eventsinks,
-you can run this command when the event store backend dropped/disconnected or you want to 
-replace the backend. The default start-height is 0, meaning the tooling will start 
-reindex from the base block height(inclusive); and the default end-height is 0, meaning 
+you can run this command when the event store backend dropped/disconnected or you want to
+replace the backend. The default start-height is 0, meaning the tooling will start
+reindex from the base block height(inclusive); and the default end-height is 0, meaning
 the tooling will reindex until the latest block height(inclusive). User can omit
 either or both arguments.
 

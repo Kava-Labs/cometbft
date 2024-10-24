@@ -11,7 +11,7 @@ import (
 
 	_ "net/http/pprof" //nolint: gosec // securely exposed on separate, optional port
 
-	dbm "github.com/cometbft/cometbft-db"
+	dbm "github.com/cosmos/cosmos-db"
 
 	abci "github.com/cometbft/cometbft/abci/types"
 	"github.com/cometbft/cometbft/blocksync"

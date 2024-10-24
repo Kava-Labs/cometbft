@@ -8,7 +8,7 @@ import (
 	"github.com/cosmos/gogoproto/proto"
 	lru "github.com/hashicorp/golang-lru/v2"
 
-	dbm "github.com/cometbft/cometbft-db"
+	dbm "github.com/cosmos/cosmos-db"
 
 	"github.com/cometbft/cometbft/evidence"
 	cmtsync "github.com/cometbft/cometbft/libs/sync"
